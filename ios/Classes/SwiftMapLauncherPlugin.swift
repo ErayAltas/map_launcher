@@ -125,30 +125,31 @@ private func showMarker(mapType: MapType, url: String, title: String, latitude: 
 }
 
 private func showDirections(mapType: MapType, url: String, destinationTitle: String?, destinationLatitude: String, destinationLongitude: String, originTitle: String?, originLatitude: String?, originLongitude: String?, directionsMode: String?, waypoints: [[String: String?]]?) {
-    switch mapType {
-    case MapType.apple:
+    // switch mapType {
+    // case MapType.apple:
 
-        let destinationMapItem = getMapItem(latitude: destinationLatitude, longitude: destinationLongitude, name: destinationTitle ?? "Destination");
+    //     let destinationMapItem = getMapItem(latitude: destinationLatitude, longitude: destinationLongitude, name: destinationTitle ?? "Destination");
 
-        let hasOrigin = originLatitude != nil && originLatitude != nil
-        var originMapItem: MKMapItem {
-            if !hasOrigin {
-                return MKMapItem.forCurrentLocation()
-            }
-            let origin = getMapItem(latitude: originLatitude!, longitude: originLongitude!, name: originTitle ?? "Origin")
-            return origin
-        }
+    //     let hasOrigin = originLatitude != nil && originLatitude != nil
+    //     var originMapItem: MKMapItem {
+    //         if !hasOrigin {
+    //             return MKMapItem.forCurrentLocation()
+    //         }
+    //         let origin = getMapItem(latitude: originLatitude!, longitude: originLongitude!, name: originTitle ?? "Origin")
+    //         return origin
+    //     }
         
-        let waypointMapItems = waypoints == nil ? [MKMapItem]() : waypoints!.map { getMapItem(latitude: $0["latitude"]!!, longitude: $0["longitude"]!!, name: $0["title"] as? String) }
+    //     let waypointMapItems = waypoints == nil ? [MKMapItem]() : waypoints!.map { getMapItem(latitude: $0["latitude"]!!, longitude: $0["longitude"]!!, name: $0["title"] as? String) }
 
-        MKMapItem.openMaps(
-            with: [originMapItem] + waypointMapItems + [destinationMapItem],
-            launchOptions: [MKLaunchOptionsDirectionsModeKey: getDirectionsMode(directionsMode: directionsMode)]
-        )
-    default:
-        UIApplication.shared.open(URL(string:url)!, options: [:], completionHandler: nil)
+    //     MKMapItem.openMaps(
+    //         with: [originMapItem] + waypointMapItems + [destinationMapItem],
+    //         launchOptions: [MKLaunchOptionsDirectionsModeKey: getDirectionsMode(directionsMode: directionsMode)]
+    //     )
+    // default:
+    //     UIApplication.shared.open(URL(string:url)!, options: [:], completionHandler: nil)
 
-    }
+    // }
+    UIApplication.shared.open(URL(string:url)!, options: [:], completionHandler: nil)
 }
 
 
