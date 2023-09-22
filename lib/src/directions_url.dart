@@ -25,9 +25,7 @@ String getMapDirectionsUrl({
             origin,
             '${origin?.latitude},${origin?.longitude}',
           ),
-          'waypoints': waypoints
-              ?.map((waypoint) => '${waypoint.latitude},${waypoint.longitude}')
-              .join('|'),
+          'waypoints': waypoints?.map((waypoint) => '${waypoint.latitude},${waypoint.longitude}').join('|'),
           'travelmode': Utils.enumToString(directionsMode),
           ...(extraParams ?? {}),
         },
@@ -43,9 +41,7 @@ String getMapDirectionsUrl({
             origin,
             '${origin?.latitude},${origin?.longitude}',
           ),
-          'waypoints': waypoints
-              ?.map((waypoint) => '${waypoint.latitude},${waypoint.longitude}')
-              .join('|'),
+          'waypoints': waypoints?.map((waypoint) => '${waypoint.latitude},${waypoint.longitude}').join('|'),
           'travelmode': Utils.enumToString(directionsMode),
           ...(extraParams ?? {}),
         },
@@ -55,7 +51,7 @@ String getMapDirectionsUrl({
       return Utils.buildUrl(
         url: 'http://maps.apple.com/maps',
         queryParams: {
-          'daddr': '${destination.latitude},${destination.longitude}',
+          'daddr': destination.latitude == 0 && destination.longitude == 0 ? destination.address : '${destination.latitude},${destination.longitude}',
           ...(extraParams ?? {}),
         },
       );
@@ -81,8 +77,7 @@ String getMapDirectionsUrl({
       return Utils.buildUrl(
         url: 'baidumap://map/direction',
         queryParams: {
-          'destination':
-              'name: ${destinationTitle ?? 'Destination'}|latlng:${destination.latitude},${destination.longitude}',
+          'destination': 'name: ${destinationTitle ?? 'Destination'}|latlng:${destination.latitude},${destination.longitude}',
           'origin': Utils.nullOrValue(
             origin,
             'name: ${originTitle ?? 'Origin'}|latlng:${origin?.latitude},${origin?.longitude}',
@@ -162,8 +157,7 @@ String getMapDirectionsUrl({
       return Utils.buildUrl(
         url: 'yandexmaps://maps.yandex.com/',
         queryParams: {
-          'rtext':
-              '${origin?.latitude},${origin?.longitude}~${destination.latitude},${destination.longitude}',
+          'rtext': '${origin?.latitude},${origin?.longitude}~${destination.latitude},${destination.longitude}',
           'rtt': Utils.getYandexMapsDirectionsMode(directionsMode),
           ...(extraParams ?? {}),
         },
@@ -204,8 +198,7 @@ String getMapDirectionsUrl({
 
     case MapType.here:
       return Utils.buildUrl(
-        url:
-            'https://share.here.com/r/${origin?.latitude},${origin?.longitude},$originTitle/${destination.latitude},${destination.longitude}',
+        url: 'https://share.here.com/r/${origin?.latitude},${origin?.longitude},$originTitle/${destination.latitude},${destination.longitude}',
         queryParams: {
           'm': Utils.getHereDirectionsMode(directionsMode),
           ...(extraParams ?? {}),
@@ -214,8 +207,7 @@ String getMapDirectionsUrl({
 
     case MapType.petal:
       return Utils.buildUrl(url: 'petalmaps://route', queryParams: {
-        'daddr':
-            '${destination.latitude},${destination.longitude} (${destinationTitle ?? 'Destination'})',
+        'daddr': '${destination.latitude},${destination.longitude} (${destinationTitle ?? 'Destination'})',
         'saddr': Utils.nullOrValue(
           origin,
           '${origin?.latitude},${origin?.longitude} (${originTitle ?? 'Origin'})',
@@ -271,8 +263,7 @@ String getMapDirectionsUrl({
       // Documentation:
       // https://www.sygic.com/developers/professional-navigation-sdk/introduction
       return Utils.buildUrl(
-        url:
-            'com.sygic.aura://coordinate|${destination.longitude}|${destination.latitude}|drive',
+        url: 'com.sygic.aura://coordinate|${destination.longitude}|${destination.latitude}|drive',
         queryParams: {
           ...(extraParams ?? {}),
         },
@@ -289,7 +280,8 @@ String getMapDirectionsUrl({
         );
       }
       return Utils.buildUrl(
-        url: 'geo:${destination.latitude},${destination.longitude}', queryParams: {},
+        url: 'geo:${destination.latitude},${destination.longitude}',
+        queryParams: {},
       );
 
     case MapType.truckmeister:

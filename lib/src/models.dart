@@ -39,8 +39,9 @@ enum DirectionsMode {
 class Coords {
   final double latitude;
   final double longitude;
+  final String? address;
 
-  Coords(this.latitude, this.longitude);
+  Coords(this.latitude, this.longitude, {this.address});
 }
 
 /// Class that holds lat/lng coordinates and optional title
